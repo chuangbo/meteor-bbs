@@ -209,13 +209,18 @@ Template.login.events
       r = JSON.parse result.content
 
       if r.status.code == '1'
-        $.cookie 'cat', r.user.email
-        Session.set 'email', r.user.email
 
-        if not Members.findOne(email: r.user.email)?
+        if r.info.user.is_staff != 'yes'
+          showerror '请使用员工帐号登录'
+          return
+
+        $.cookie 'cat', data.email
+        Session.set 'email', data.email
+
+        if not Members.findOne(email: data.email)?
           Members.insert
-            email: r.user.email
-            user: userof r.user.email
+            email: data.email
+            user: userof data.email
             created: new Date()
 
         Router.navigate '/', true

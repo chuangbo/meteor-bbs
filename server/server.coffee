@@ -10,7 +10,7 @@ Meteor.methods
   login:  (email, password, token) ->
     this.unblock()
     Meteor.http.post(
-      "https://dnsapi.cn/User.Info",
+      "https://dnsapi.cn/User.Detail",
       {params:
         login_email: email
         login_password: password
