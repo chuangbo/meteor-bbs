@@ -35,6 +35,7 @@ Demo：https://dnspod-bbs.meteor.com
 
    ~~~
    $ git clone https://github.com/chuangbo/meteor-bbs.git
+   $ cd meteor-bbs
    ~~~
 
 3. run
