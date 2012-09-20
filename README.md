@@ -1,4 +1,6 @@
 # A Clone of Project Babel 3 in Meteor
+这是一份对 Project Babel 3 的克隆，用 Meteor 写成。
+Demo：https://dnspod-bbs.meteor.com
 
 ## Project Babel 3 是什么？
 
@@ -9,11 +11,6 @@
 ## Why clone?
 
 这份克隆源于我自己的需求，我们团队内部需要一套讨论软件，用来分享、讨论、沉淀，我非常喜欢 V2EX 的简洁，并感觉这就是我们需要的，于是我克隆了它。
-
-
-## Thank Project Babel
-
-这份代码完全没有作为产品的计划，开源仅仅只是为了分享、学习 Meteor，别无他意。
 
 ## Features
 
@@ -44,3 +41,8 @@
    ~~~
    $ meteor
    ~~~
+
+
+## Thank Project Babel
+
+这份代码完全没有作为产品的计划，开源仅仅只是为了分享、学习 Meteor，别无他意。
