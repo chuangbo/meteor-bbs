@@ -1,0 +1,392 @@
+<head>
+  <meta charset="utf-8">
+  <title>Meteor V2EX</title>
+  <meta content="True" name="HandheldFriendly" />
+  <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
+
+  <link rel="stylesheet" media="screen and (min-width: 768px)" href="/desktop.css">
+  <link rel="stylesheet" media="screen and (max-width: 767px)" href="/mobile.css">
+</head>
+
+<body>
+  {{> main}}
+</body>
+
+<template name="main">
+    <div id="Wrapper">
+        <div class="content">
+            
+            <div id="Leftbar"></div>
+            {{> rightbar}}
+            <div id="Main">
+
+                {{#if index}}
+                  {{> index}}
+                {{/if}}
+
+                {{#if login}}
+                  {{> login}}
+                {{/if}}
+
+                {{#if new}}
+                  {{> new}}
+                {{/if}}
+
+                {{#if topic}}
+                  {{> topic}}
+                {{/if}}
+
+                {{#if member}}
+                  {{> member}}
+                {{/if}}
+
+
+            </div>
+            
+        </div>
+        <div class="c"></div>
+        <div class="sep20"></div>
+    </div>
+</template>
+
+<template name="rightbar">
+  {{#with member}}
+              <div id="Rightbar">
+                <div class="sep20"></div>
+                {{#if logined}}
+                <div class="box">
+                    <div class="cell">
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                                <td width="48" valign="top"><a href="/member/{{user}}"><img src="{{gravatar email 48}}" class="avatar" border="0" align="default" width="48" height="48"/></a></td>
+                                <td width="10" valign="top"></td>
+                                <td width="auto" align="left"><span class="bigger"><a href="/member/{{user}}">{{email}}</a></span>
+                                    <div class="sep5"></div>
+                                    <span class="fade">&#9733; &#9733; &#9733; &#9734; &#9734;</span>
+                                </td>
+                            </tr>
+                        </table>
+                    
+                </div>
+                {{else}}
+                <div class="box">
+                    <div class="cell">
+                        <strong>by @chuangbo</strong>
+                        <div class="sep5"></div>
+                        <span class="fade">Live long and prosper</span>
+                    </div>
+                    <div class="inner">
+                        <div class="sep5"></div>
+                        <div align="center"><a class="super normal button" href="/login">用DNSPod帐号登录</a>
+                        <div class="sep10"></div>
+                        <span class="fade"> many thanks to @livid's <a href="http://www.v2ex.com">V2EX</a></span>
+
+                    </div>
+                </div>
+                {{/if}}
+                
+            </div>
+  {{/with}}
+</template>
+
+
+
+<template name="index">
+  <div class="sep20"></div>
+  <div class="box">
+    <div class="cell" id="Tabs">
+      <a href="/" class="{{#if current_tab "/"}}tab_current{{else}}tab{{/if}}">全部</a>
+      {{#each all_nodes}}
+        <a href="/go/{{name}}" class="{{#if current_tab name}}tab_current{{else}}tab{{/if}}">{{zh}}</a>
+      {{/each}}
+      <a type="button" class="super normal button fr" href='/new'>创建新主题</a>
+    </div>
+
+    {{#each topics}}
+      {{> topic_item}}
+    {{/each}}
+
+    <div class="inner">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody><tr>
+                <td width="120" align="left">
+                  {{#if has_prev_page}}
+                  <a href="{{prev_page}}" class="super normal button">‹ 上一页</a>
+                  {{/if}}
+                </td>
+                <td width="auto" align="center"><strong class="fade">{{current_page}}/{{page_count}}</strong></td>
+                <td width="120" align="right">
+                  {{#if has_next_page}}
+                  <a href="{{next_page}}" class="super normal button">下一页 ›</a>
+                  {{/if}}
+                </td>
+            </tr>
+        </tbody></table>
+    </div>
+
+  </div>
+</template>
+
+
+
+
+<template name="login">
+  <div class="sep20"></div>
+  <div class="box">
+      <div class="header"><a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> 登入</div>
+      <div class="problem">登入过程中遇到一些问题：<ul><li></li></ul></div>
+      <div class="inner">
+          <form>
+          <table cellpadding="5" cellspacing="0" border="0" width="100%">
+              <tr>
+                  <td width="120" align="right">邮箱</td>
+                  <td width="auto" align="left"><input type="text" class="sl" name="email" value="" autofocus="autofocus" /></td>
+              </tr>
+              <tr>
+                  <td width="120" align="right">密码</td>
+                  <td width="auto" align="left"><input type="password" class="sl" name="password" value="" /></td>
+              </tr>
+              <tr>
+                  <td width="120" align="right">D令牌</td>
+                  <td width="auto" align="left"><input type="text" class="sl" name="token" value="" placeholder="如果有的话"/></td>
+              </tr>
+              <tr>
+                  <td width="120" align="right"></td>
+                  <td width="auto" align="left"><input type="submit" class="super normal button" value="登入" /></td>
+              </tr>
+          </table>
+          </form>
+      </div>
+  </div>
+
+
+</template>
+
+<template name="new">
+  <div class="sep20"></div>
+  <div class="box">
+    <div class="header"><a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> 创建新主题</div>
+    <div class="problem">创建新主题过程中遇到一些问题：<ul><li></li></ul></div>
+    <div class="cell">
+        <form>
+        <table cellpadding="5" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td>
+                  {{#each all_nodes}}
+                    <label> <input type="checkbox" name="node" value="{{name}}" {{default_node name}}> {{zh}}</label>
+                  {{/each}}
+                </td>
+            </tr>
+            <tr>
+                <td><textarea class="mle" name="title" autofocus="autofocus" placeholder="标题"></textarea></td>
+            </tr>
+            <tr>
+                <td><textarea class="mle tall" name="content" placeholder=""></textarea></td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="创建" class="super normal button" /></td>
+            </tr>
+        </table>
+        </form>
+    </div>
+  </div>
+
+</template>
+
+
+
+
+
+<template name="topic">
+  {{#each topic}}
+  <div class="sep20"></div>
+  <div class="box" style="border-bottom: 0px;">
+    <div class="header"><div class="fr"><a href="/member/{{user}}">{{#constant}}<img src="{{gravatar email 73}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</a></div>
+    <a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> {{#each nodes}} <a href="/go/{{this}}" class="tab">{{node_name this}}</a> {{/each}}
+    <div class="sep10"></div>
+    <h1>{{title}}</h1>
+    <small class="gray">By <a href="/member/{{user}}">{{user}}</a> at {{fromnow created}}, {{views}} 次点击 &nbsp; </small>
+    </div>
+    {{#if content}}
+    <div class="cell">
+        <div class="topic_content">{{{content}}}</div>
+    </div>
+    {{/if}}
+    
+</div>
+
+  <div class="sep20"></div>
+  {{#if no_reply}}
+<div class="box transparent">
+    <div class="inner" style="text-align: center">
+        <span style="color: rgba(0, 0, 0, 0.25);">目前尚无回复</span>
+    </div>
+</div>
+{{else}}
+
+<div class="box">
+<div class="cell">
+    <span class="gray">{{reply_count}} 回复 &nbsp;<strong class="snow">|</strong> &nbsp;直到 {{fromnow updated}}</span>
+</div>
+
+
+{{#each replys}}
+  {{> reply}}
+{{/each}}
+
+</div>
+{{/if}}
+
+  {{#if logined}}
+
+    {{#constant}}
+      <div class="sep20"></div>
+    <div class="box">
+        <div class="cell"><div class="fr"><a href="#"><strong>↑</strong> 回到顶部</a></div>
+            添加一条新回复
+        </div>
+        <div class="problem">创建新回复过程中遇到一些问题：<ul><li></li></ul></div>
+        <div class="cell"><form>
+            <textarea name="content" maxlength="10000" class="mll" id="content"></textarea>
+            <div class="sep10"></div>
+            <div class="fr"><div class="sep5"></div><span class="gray">请尽量让自己的回复能够对别人有帮助</span></div>
+            <input type="submit" value="回复" class="super normal button"></form>
+        </div>
+        <div class="inner">
+            <div class="fr"><a href="/">← Home</a></div>
+            &nbsp;
+        </div>
+    </div>
+    {{/constant}}
+
+  {{/if}}
+
+  {{/each}}
+
+</template>
+
+
+<template name="reply">
+  <div class="cell">
+    <table cellpadding="0" cellspacing="0" border="0" width="100%">
+        <tbody><tr>
+            <td width="48" valign="top" align="center"><img src="{{gravatar email 48}}" class="avatar" border="0" align="default" auto="" width="48" height="48"></td>
+            <td width="10" valign="top"></td>
+            <td width="auto" valign="top" align="left"><div class="fr"><!-- <div id="thank_area_414844" class="thank_area"><a href="#;" class="thank">感谢回复者</a></div> &nbsp;  --><a href="#;" class="ReplyOne"><span class="reply_ico"></span></a> &nbsp;&nbsp; <span class="no">{{index}}</span></div>
+                <div class="sep3"></div>
+                <strong><a href="/member/{{user}}" class="dark">{{user}}</a></strong>&nbsp; &nbsp;<span class="fade small">{{fromnow created}}</span> 
+                <div class="sep5"></div>
+                <div class="reply_content">{{{content}}}</div>
+            </td>
+        </tr>
+    </tbody></table>
+</div>
+</template>
+
+
+
+
+
+
+<template name="member">
+  {{#each member}}
+  <div class="sep20"></div>
+
+  <div class="box">
+    <div class="cell">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody><tr>
+                <td width="73" valign="top" align="center">{{#constant}}<img src="{{gravatar email 73}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</td>
+                <td width="10"></td>
+                <td width="auto" valign="top" align="left">
+                    <div class="fr">
+                    
+                        
+                    
+                    </div>
+                    <h1 style="margin-bottom: 5px;">{{user}}</h1>
+                    <span class="bigger gray">Live long and prosper</span>
+                    <div class="sep5"></div>
+                    <span class="fade">DNSPod 第 {{_id}} 号会员，加入于 {{fromnow created}}</span>
+                </td>
+            </tr>
+        </tbody></table>
+        <div class="sep5"></div>
+    </div>
+        
+    <div class="inner">
+        Live long and prosper
+    </div>
+    
+</div>
+
+
+  <div class="sep20"></div>
+
+<div class="box">
+    <div class="cell"><span class="gray">{{user}} 最近创建的主题</span></div>
+
+    {{#each topics}}
+    {{> topic_item}}
+  {{/each}}
+    
+</div>
+
+  <div class="sep20"></div>
+
+<div class="box">
+    <div class="cell"><span class="gray">{{user}} 最近回复了</span></div>
+    
+    {{#each replys}}
+
+      {{#each reply_to topic_id}}
+    <div class="dock_area">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody><tr>
+                <td style="padding: 10px 15px 8px 15px; font-size: 12px; text-align: left;"><div class="fr"><span class="fade">{{fromnow ../created}}</span></div><span class="gray">回复了 {{user}} 创建的主题 <span class="chevron">›</span> <a href="/t/{{_id}}#reply{{reply_count}}">{{title}}</a></span></td> 
+            </tr>
+            <tr>
+                <td align="left"><img src="/img/arrow.png" style="margin-left: 20px;"></td>
+            </tr>
+        </tbody></table>
+    </div>
+    {{/each}}
+    <div class="inner">
+        <div class="reply_content">{{{content}}}</div>
+    </div>
+
+    {{/each}}
+    
+    
+    <!-- <div class="inner"><span class="chevron">»</span> <a href="/member/chuangbo/replies">chuangbo 创建的更多回复</a></div> -->
+    
+</div>
+{{/each}}
+</template>
+
+
+
+<template name="topic_item">
+      <div class="cell item">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tbody><tr>
+                
+                <td width="48" valign="top" align="center"><a href="/member/{{user}}"><img src="{{gravatar email 48}}" class="avatar" border="0" align="default" auto="" width="48" height="48"></a></td>
+                <td width="10"></td>
+                
+                <td width="auto" valign="middle"><span class="item_title"><a href="/t/{{_id}}#reply{{reply_count}}">{{title}}</a></span>
+                <div class="sep5"></div>
+                <span class="small fade">{{#each nodes}}<a class="node" href="/go/{{this}}">{{node_name this}}</a> &nbsp;•&nbsp; {{/each}}<strong><a href="/member/{{user}}">{{user}}</a></strong> &nbsp;•&nbsp; {{fromnow updated}} {{#if last_reply}}&nbsp;•&nbsp; 最后回复来自 <strong><a href="/member/{{userof last_reply}}">{{userof last_reply}}</a></strong>{{/if}}</span>
+                </td>
+                <td width="50" align="right" valign="middle">
+                    {{#unless no_reply}}
+                    <a href="/t/{{_id}}#reply{{reply_count}}" class="count_livid">{{reply_count}}</a>
+                    {{/unless}}
+                </td>
+            </tr>
+        </tbody>
+        </table>
+      </div>
+</template>
+
+

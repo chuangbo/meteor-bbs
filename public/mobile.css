@@ -1,0 +1,83 @@
+body {
+    -webkit-text-size-adjust: none;
+}
+
+h1 {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 140%;
+    margin: 5px 0px 15px 0px;
+    padding: 0px;
+}
+
+#Wrapper .content {
+    width: auto;
+    padding: 5px;
+}
+
+#Top .content {
+    width: auto;
+}
+
+#Main {
+    margin: 0;
+}
+
+#Main .sep20:first-child {
+    display: none;
+}
+.sep20 {
+    height: 10px;
+}
+
+#Rightbar {
+    display: none;
+}
+
+#Bottom .content {
+    width: auto;
+}
+
+.header {
+    padding: 5px;
+}
+
+.cell {
+    padding: 5px;
+}
+
+.inner {
+    padding: 5px;
+}
+
+.caution {
+    padding: 5px;
+}
+
+.sl {
+    width: 210px;
+}
+
+.ml {
+    width: 210px;
+}
+
+.mll {
+    width: 100%;
+    padding: 0px;
+    margin: 0px -1px 0px -1px;
+}
+
+.mle {
+    width: 100%;
+    padding: 0px;
+    margin: 0px -1px 0px -1px;
+}
+
+.tall {
+    height: 220px;
+}
+
+.imgly {
+    max-width: 280px;
+}
