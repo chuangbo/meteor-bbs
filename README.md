@@ -29,7 +29,13 @@ Demo：https://dnspod-bbs.meteor.com
 
 ## How to start
 
-1. 安装 Meteor（目前基于 0.4.0，因为 Meteor 变化很快，新版本不一定支持）
+1. ~~安装 Meteor（目前基于 0.4.0，因为 Meteor 变化很快，新版本不一定支持）~~
+
+1. 安装 meteorite（使用了 atmosphere 的 package
+
+   ~~~
+   npm install -g meteorite
+   ~~~
 
 1. git clone
 
@@ -41,7 +47,8 @@ Demo：https://dnspod-bbs.meteor.com
 3. run
 
    ~~~
-   $ meteor
+   $ # meteor
+   $ mrt
    ~~~
 
 

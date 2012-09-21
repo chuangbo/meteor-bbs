@@ -202,11 +202,6 @@ Template.login.events
       r = JSON.parse result.content
 
       if r.status.code == '1'
-
-        if r.info.user.is_staff != 'yes'
-          showerror '请使用员工帐号登录'
-          return
-
         Cookie.set 'cat', data.email
         Session.set 'email', data.email
 
