@@ -1,6 +1,6 @@
 <head>
   <meta charset="utf-8">
-  <title>DNSPod 茶馆</title>
+  <title>Meteor V2EX</title>
   <meta content="True" name="HandheldFriendly" />
   <meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0" name="viewport" />
 
@@ -52,7 +52,7 @@
                 {{else}}
                 <div class="box">
                     <div class="cell">
-                        <strong>D茶馆 by @chuangbo</strong>
+                        <strong>by @chuangbo</strong>
                         <div class="sep5"></div>
                         <span class="fade">Live long and prosper</span>
                     </div>
@@ -114,7 +114,7 @@
 <template name="login">
   <div class="sep20"></div>
   <div class="box">
-      <div class="header"><a href="/">茶馆</a> <span class="chevron">&nbsp;›&nbsp;</span> 登入</div>
+      <div class="header"><a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> 登入</div>
       <div class="problem">登入过程中遇到一些问题：<ul><li></li></ul></div>
       <div class="inner">
           <form>
@@ -146,7 +146,7 @@
 <template name="new">
   <div class="sep20"></div>
   <div class="box">
-    <div class="header"><a href="/">茶馆</a> <span class="chevron">&nbsp;›&nbsp;</span> 创建新主题</div>
+    <div class="header"><a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> 创建新主题</div>
     <div class="problem">创建新主题过程中遇到一些问题：<ul><li></li></ul></div>
     <div class="cell">
         <form>
@@ -183,7 +183,7 @@
   <div class="sep20"></div>
   <div class="box" style="border-bottom: 0px;">
     <div class="header"><div class="fr"><a href="/member/{{user}}">{{#constant}}<img src="{{gravatar email 73}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</a></div>
-    <a href="/">茶馆</a> <span class="chevron">&nbsp;›&nbsp;</span> {{#each nodes}} <a href="/go/{{this}}" class="tab">{{node_name this}}</a> {{/each}}
+    <a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> {{#each nodes}} <a href="/go/{{this}}" class="tab">{{node_name this}}</a> {{/each}}
     <div class="sep10"></div>
     <h1>{{title}}</h1>
     <small class="gray">By <a href="/member/{{user}}">{{user}}</a> at {{fromnow created}}, {{views}} 次点击 &nbsp; </small>
@@ -234,7 +234,7 @@
             <input type="submit" value="回复" class="super normal button"></form>
         </div>
         <div class="inner">
-            <div class="fr"><a href="/">← 茶馆</a></div>
+            <div class="fr"><a href="/">← Home</a></div>
             &nbsp;
         </div>
     </div>
