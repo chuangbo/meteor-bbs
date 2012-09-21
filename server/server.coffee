@@ -1,8 +1,3 @@
-Topics = new Meteor.Collection 'topics'
-Replys = new Meteor.Collection 'replys'
-Members = new Meteor.Collection 'members'
-Nodes = new Meteor.Collection 'nodes'
-
 # server
 
 
@@ -10,7 +5,7 @@ Meteor.methods
   login:  (email, password, token) ->
     this.unblock()
     Meteor.http.post(
-      "https://dnsapi.cn/User.Info",
+      "https://dnsapi.cn/User.Detail",
       {params:
         login_email: email
         login_password: password

@@ -1,0 +1,8 @@
+{
+  "packages": {
+    "moment": {},
+    "gravatar": {},
+    "router": {},
+    "cookie": {}
+  }
+}

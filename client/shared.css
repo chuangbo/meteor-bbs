@@ -8,8 +8,10 @@ html {
 body {
     padding: 0px;
     margin: 0px;
-    background-color: #fff;
     font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti !important;
+    background-color: #d0d0d0;
+    background-image: url("img/shadow.png");
+    background-repeat: repeat-x, repeat;
 }
 
 h1 {
@@ -211,9 +213,6 @@ ul li {
 
 #Wrapper {
     text-align: center;
-    background-color: #d0d0d0;
-    background-image: url("img/shadow.png");
-    background-repeat: repeat-x, repeat;
 }
 
 #Bottom {
