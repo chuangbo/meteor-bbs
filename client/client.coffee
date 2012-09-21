@@ -61,6 +61,7 @@ view_helpers =
     userof this.email
 
   gravatar: (email, size) ->
+    return Gravatar.imageUrl email, {s: size}
     key = "#{email}_#{size}"
     if key of gravatars
       gravatars[key]
@@ -88,14 +89,6 @@ content_parser = [
 
 
 # main
-
-Template.main.helpers
-  index: -> Session.equals 'view', 'index'
-  login: -> Session.equals 'view', 'login'
-  new: -> Session.equals 'view', 'new'
-  topic: -> Session.equals 'view', 'topic'
-  member: -> Session.equals 'view', 'member'
-
 Template.main.events
   'click a:not([href^="http"]):not([href^="#"])': (e) ->
     e.preventDefault()
@@ -214,7 +207,7 @@ Template.login.events
           showerror '请使用员工帐号登录'
           return
 
-        $.cookie 'cat', data.email
+        Cookie.set 'cat', data.email
         Session.set 'email', data.email
 
         if not Members.findOne(email: data.email)?
@@ -285,7 +278,7 @@ Template.topic.helpers
 
   replys: ->
     r = Replys.find(topic_id: this._id).fetch()
-    _i = 0
+    _i = 1
     for i in r
       i.index = _i
       _i += 1
@@ -361,7 +354,7 @@ Template.member.helpers
 # APP
 
 
-BbsRouter = Backbone.Router.extend
+BbsRouter = ReactiveRouter.extend
   routes:
     "": "index"
     "p:page": "index_page"
@@ -372,50 +365,50 @@ BbsRouter = Backbone.Router.extend
     "go/:node/p:page": "tab_page"
     "member/:user": "member"
   index: ->
-    Session.set 'view', 'index'
     Session.set 'tab', '/'
-    $.cookie 'tab', '/'
+    Cookie.set 'tab', '/'
     Session.set 'page', 1
+    this.goto 'index'
   index_page: (page) ->
-    Session.set 'view', 'index'
     Session.set 'tab', '/'
-    $.cookie 'tab', '/'
+    Cookie.set 'tab', '/'
     Session.set 'page', page
+    this.goto 'index'
   new: ->
     if not logined()
       this.navigate 'login', true
     else
-      Session.set 'view', 'new'
+      this.goto 'new'
   login: ->
     if logined()
       this.navigate '/', true
     else
-      Session.set 'view', 'login'
+      this.goto 'login'
   topic: (topic_id) ->
     topic_id = topic_id.split('#', 2)[0]
     Session.set 'topic_id', topic_id
-    Session.set 'view', 'topic'
+    this.goto 'topic'
   tab: (node) ->
     Session.set 'tab', node
-    Session.set 'view', 'index'
-    $.cookie 'tab', node
+    Cookie.set 'tab', node
     Session.set 'page', 1
+    this.goto 'index'
   tab_page: (node, page) ->
     Session.set 'tab', node
-    Session.set 'view', 'index'
-    $.cookie 'tab', node
+    Cookie.set 'tab', node
     Session.set 'page', page
+    this.goto 'index'
   member: (member) ->
-    Session.set 'view', 'member'
     Session.set 'member', member
+    this.goto 'member'
 
 
 Router = new BbsRouter
 
 Meteor.startup ->
   console.log 'meteor startup'
-  tab = $.cookie 'tab'
-  Session.set 'email', $.cookie('cat')
+  tab = Cookie.get 'tab'
+  Session.set 'email', Cookie.get('cat')
   Backbone.history.start pushState: true
 
   if location.pathname == '/' and tab? and tab != '/'

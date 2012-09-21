@@ -7,3 +7,7 @@ autopublish
 coffeescript
 backbone
 http
+gravatar
+router
+cookie
+moment

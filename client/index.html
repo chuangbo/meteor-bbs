@@ -20,26 +20,7 @@
             {{> rightbar}}
             <div id="Main">
 
-                {{#if index}}
-                  {{> index}}
-                {{/if}}
-
-                {{#if login}}
-                  {{> login}}
-                {{/if}}
-
-                {{#if new}}
-                  {{> new}}
-                {{/if}}
-
-                {{#if topic}}
-                  {{> topic}}
-                {{/if}}
-
-                {{#if member}}
-                  {{> member}}
-                {{/if}}
-
+              {{{render currentPage}}}
 
             </div>
             
