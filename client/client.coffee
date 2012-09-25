@@ -6,7 +6,7 @@ Session.set 'tab', '/'
 Session.set 'member', null
 Session.set 'page', 1
 
-PAGE_ITEM = 20
+PAGE_ITEM = 10
 
 gravatars = {}
 
@@ -126,7 +126,7 @@ Template.index.helpers
     tab = Session.get 'tab'
     console.log 'get topics', tab
 
-    sel = if tab == '/' then {} else {nodes: tab}
+    sel = if tab == '/' then {nodes: {$ne: 'dnspod'}} else {nodes: tab}
     r = Topics.find sel, {sort: {updated: -1}}
 
     # page
@@ -162,7 +162,7 @@ Template.index.helpers
 
   page_count: ->
     tab = Session.get 'tab'
-    sel = if tab == '/' then {} else {nodes: tab}
+    sel = if tab == '/' then {nodes: {$ne: 'dnspod'}} else {nodes: tab}
     Math.ceil ( Topics.find(sel).count() / PAGE_ITEM )
 
   has_prev_page: ->
@@ -170,7 +170,7 @@ Template.index.helpers
 
   has_next_page: ->
     tab = Session.get 'tab'
-    sel = if tab == '/' then {} else {nodes: tab}
+    sel = if tab == '/' then {nodes: {$ne: 'dnspod'}} else {nodes: tab}
     max_page = Math.ceil ( Topics.find(sel).count() / PAGE_ITEM )
 
     Session.get('page') - 0 != max_page

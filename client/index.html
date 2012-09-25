@@ -76,7 +76,7 @@
   <div class="sep20"></div>
   <div class="box">
     <div class="cell" id="Tabs">
-      <a href="/" class="{{#if current_tab "/"}}tab_current{{else}}tab{{/if}}">全部</a>
+      <a href="/" class="{{#if current_tab "/"}}tab_current{{else}}tab{{/if}}">全部（不含闲聊）</a>
       {{#each all_nodes}}
         <a href="/go/{{name}}" class="{{#if current_tab name}}tab_current{{else}}tab{{/if}}">{{zh}}</a>
       {{/each}}
