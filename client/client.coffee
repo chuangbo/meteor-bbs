@@ -82,9 +82,16 @@ view_helpers =
 
 
 content_parser = [
-  (o) -> _.escape o
-  (o) -> o.replace /@([a-zA-z0-9]+)/g, '<a href="/member/$1">@$1</a>'
+  # excape
+  (o) -> Handlebars._escape o
+  # br
   (o) -> o.replace /\n/g, '<br>'
+  # mention
+  (o) -> o.replace /@([a-zA-z0-9]+)/g, '<a href="/member/$1">@$1</a>'
+  # linkify
+  (o) -> o.replace /(http|https|ftp)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(:[a-zA-Z0-9]*)?\/?([a-zA-Z0-9\-\._\?\,\'\/\\\+&amp;%\$#\=~])*/g, '<a href="$&" target="_blank">$&</a>'
+  # gist
+  # (o) -> o.replace /(https?:\/\/gist.github.com\/[\d]+)/g, '<script src="$1.js"></script>'
 ]
 
 
