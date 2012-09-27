@@ -82,7 +82,7 @@ view_helpers =
 
 
 content_parser = [
-  # excape
+  # escape
   (o) -> Handlebars._escape o
   # br
   (o) -> o.replace /\n/g, '<br>'
