@@ -82,7 +82,7 @@ view_helpers =
 
 
 content_parser = [
-  # excape
+  # escape
   (o) -> Handlebars._escape o
   # br
   (o) -> o.replace /\n/g, '<br>'
@@ -100,7 +100,7 @@ Template.main.events
   'click a:not([href^="http"]):not([href^="#"])': (e) ->
     e.preventDefault()
     href = $(e.currentTarget).attr 'href'
-    Router.navigate(href, true)
+    Router.navigate href, {trigger: true}
 
 
 
@@ -223,7 +223,7 @@ Template.login.events
             user: userof data.email
             created: new Date()
 
-        Router.navigate '/', true
+        Router.navigate '/', {trigger: true}
       else
         showerror r.status.message
 
@@ -268,7 +268,7 @@ Template.new.events
 
     topic_id = Topics.insert data
 
-    Router.navigate "t/#{topic_id}", true
+    Router.navigate "t/#{topic_id}#reply0", {trigger: true}
 
 
 
@@ -315,6 +315,9 @@ Template.topic.events
         $set: {last_reply: email, updated: new Date()}
         $inc: {reply_count: 1}
       }
+
+    reply_count = Topics.findOne(_id: this._id).reply_count
+    Router.navigate "t/#{this._id}#reply#{reply_count}", {trigger: false, replace: true}
 
     $('#content').val('')
 
@@ -383,12 +386,12 @@ BbsRouter = ReactiveRouter.extend
     this.goto 'index'
   new: ->
     if not logined()
-      this.navigate 'login', true
+      this.navigate 'login', {trigger: true}
     else
       this.goto 'new'
   login: ->
     if logined()
-      this.navigate '/', true
+      this.navigate '/', {trigger: true}
     else
       this.goto 'login'
   topic: (topic_id) ->
@@ -419,7 +422,7 @@ Meteor.startup ->
   Backbone.history.start pushState: true
 
   if location.pathname == '/' and tab? and tab != '/'
-    Router.navigate "go/#{tab}", true
+    Router.navigate "go/#{tab}", {trigger: true}
 
 
 
