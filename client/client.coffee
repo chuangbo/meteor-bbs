@@ -1,31 +1,15 @@
 # init
 Session.set 'view', null
-Session.set 'email', null
 Session.set 'topic_id', null
 Session.set 'tab', '/'
-Session.set 'member', null
+Session.set 'memberId', null
 Session.set 'page', 1
 
 PAGE_ITEM = 20
 
-gravatars = {}
-
-window.init_bbs = ->
-  NODES =
-    dnspod: '闲聊'
-    tech: '技术'
-    web: 'Web'
-    dns: 'DNS'
-    python: 'Python'
-
-  for k, v of NODES
-    Nodes.insert name: k, zh: v
-
-
-
 # staff
 logined = ->
-  Session.get('email')?
+  Meteor.user()
 
 
 showerror = (message) ->
@@ -40,8 +24,8 @@ formData = (form) ->
     data[i.name] = i.value
   data
 
-userof = (email) ->
-  email.split('@', 2)[0]
+userof = (userId) ->
+  Meteor.users.findOne({_id: userId})?.profile.name
 
 
 
@@ -58,15 +42,10 @@ view_helpers =
   userof: userof
 
   user: ->
-    userof this.email
+    userof this.userId
 
-  gravatar: (email, size) ->
-    return Gravatar.imageUrl email, {s: size}
-    key = "#{email}_#{size}"
-    if key of gravatars
-      gravatars[key]
-    else
-      gravatars[key] = "//www.gravatar.com/avatar/#{MD5 email}?s=#{size}"
+  gravatar: () ->
+    return Meteor.users.findOne({'_id': this.userId})?.profile?.figureUrl
 
   fromnow: (t) ->
     moment.utc(t).fromNow()
@@ -111,15 +90,16 @@ Template.main.events
 Template.rightbar.helpers view_helpers
 
 Template.rightbar.helpers
-  # logined: -> Session.get('email')?
-  # logined: -> false
-  # logined: -> false
   logined: ->
-    this.email?
+    Meteor.user()
   member: ->
-    Members.findOne email: Session.get 'email'
+    Meteor.user()
 
 Template.rightbar.preserve ['img']
+
+Template.rightbar.events
+  'click #loginBtn': =>
+    Meteor.loginWithQq()
 
 
 
@@ -189,42 +169,6 @@ Template.topic_item.preserve ['img']
 
 
 
-# login
-Template.login.events
-  'submit form': (e) ->
-    e.preventDefault()
-
-
-    data = formData e.currentTarget
-
-    if data.email == ''
-      showerror '请输入用户名'
-      return
-
-    if data.password == ''
-      showerror '请输入密码'
-      return
-    
-    Meteor.call 'login', data.email, data.password, data.token, (error, result) ->
-      r = JSON.parse result.content
-
-      if r.status.code == '1'
-        Cookie.set 'cat', data.email
-        Session.set 'email', data.email
-
-        if not Members.findOne(email: data.email)?
-          Members.insert
-            email: data.email
-            user: userof data.email
-            created: new Date()
-
-        Router.navigate '/', {trigger: true}
-      else
-        showerror r.status.message
-
-
-
-
 
 
 
@@ -241,7 +185,7 @@ Template.new.events
     e.preventDefault()
 
     data = formData e.currentTarget
-    data.email = Session.get 'email'
+    data.userId = Meteor.userId()
     data.created = new Date()
     data.updated = new Date()
     data.reply_count = 0
@@ -293,7 +237,7 @@ Template.topic.events
 
     data = formData e.currentTarget
     data.topic_id = this._id
-    data.email = email = Session.get 'email'
+    data.userId = Meteor.userId()
     data.created = new Date()
 
     console.log data
@@ -307,7 +251,7 @@ Template.topic.events
     # update topic last_reply & replys
     Topics.update {_id: this._id},
       {
-        $set: {last_reply: email, updated: new Date()}
+        $set: {last_reply: Meteor.userId(), updated: new Date()}
         $inc: {reply_count: 1}
       }
 
@@ -322,7 +266,7 @@ Template.topic.events
     i = $('#content')
     old = i.val()
 
-    prefix = "@#{userof this.email} "
+    prefix = "@#{userof this.userId} "
 
     i.focus()
     if old.length > 0 and old != prefix
@@ -342,14 +286,14 @@ Template.member.helpers view_helpers
 
 Template.member.helpers
   member: ->
-    Members.find user: Session.get 'member'
+    Meteor.users.find '_id': Session.get 'memberId'
 
   topics: ->
-    r = Topics.find {email: this.email}, {sort: {updated: -1}}
+    r = Topics.find {userId: this.userId}, {sort: {updated: -1}}
     r.fetch().slice 0, 20
 
   replys: ->
-    r = Replys.find {email: this.email}, {sort: {created: -1}}
+    r = Replys.find {userId: this.userId}, {sort: {created: -1}}
     r.fetch().slice 0, 20
 
   reply_to: (topic_id) ->
@@ -363,12 +307,11 @@ BbsRouter = ReactiveRouter.extend
   routes:
     "": "index"
     "p:page": "index_page"
-    "login": "login"
     "new": "new"
     "t/:topic_id": "topic"
     "go/:node": "tab"
     "go/:node/p:page": "tab_page"
-    "member/:user": "member"
+    "member/:id": "member"
   index: ->
     Session.set 'tab', '/'
     Cookie.set 'tab', '/'
@@ -381,7 +324,7 @@ BbsRouter = ReactiveRouter.extend
     this.goto 'index'
   new: ->
     if not logined()
-      this.navigate 'login', {trigger: true}
+      return
     else
       this.goto 'new'
   login: ->
@@ -403,8 +346,8 @@ BbsRouter = ReactiveRouter.extend
     Cookie.set 'tab', node
     Session.set 'page', page
     this.goto 'index'
-  member: (member) ->
-    Session.set 'member', member
+  member: (id) ->
+    Session.set 'memberId', id
     this.goto 'member'
 
 
@@ -413,7 +356,6 @@ Router = new BbsRouter
 Meteor.startup ->
   console.log 'meteor startup'
   tab = Cookie.get 'tab'
-  Session.set 'email', Cookie.get('cat')
   Backbone.history.start pushState: true
 
   if location.pathname == '/' and tab? and tab != '/'

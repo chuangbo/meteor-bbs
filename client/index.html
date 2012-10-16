@@ -19,9 +19,7 @@
             <div id="Leftbar"></div>
             {{> rightbar}}
             <div id="Main">
-
               {{{render currentPage}}}
-
             </div>
             
         </div>
@@ -39,9 +37,9 @@
                     <div class="cell">
                         <table cellpadding="0" cellspacing="0" border="0" width="100%">
                             <tr>
-                                <td width="48" valign="top"><a href="/member/{{user}}"><img src="{{gravatar email 48}}" class="avatar" border="0" align="default" width="48" height="48"/></a></td>
+                                <td width="48" valign="top"><a href="/member/{{_id}}"><img src="{{profile.figureUrl}}" class="avatar" border="0" align="default" width="48" height="48"/></a></td>
                                 <td width="10" valign="top"></td>
-                                <td width="auto" align="left"><span class="bigger"><a href="/member/{{user}}">{{email}}</a></span>
+                                <td width="auto" align="left"><span class="bigger"><a href="/member/{{_id}}">{{profile.name}}</a></span>
                                     <div class="sep5"></div>
                                     <span class="fade">&#9733; &#9733; &#9733; &#9734; &#9734;</span>
                                 </td>
@@ -52,13 +50,13 @@
                 {{else}}
                 <div class="box">
                     <div class="cell">
-                        <strong>by @chuangbo</strong>
+                        <strong>by @chuangbo,  qq login by @yonggao</strong>
                         <div class="sep5"></div>
                         <span class="fade">Live long and prosper</span>
                     </div>
                     <div class="inner">
                         <div class="sep5"></div>
-                        <div align="center"><a class="super normal button" href="/login">用DNSPod帐号登录</a>
+                        <div align="center"><a href="#" id="loginBtn"><img src="/img/qq.png" /></a>
                         <div class="sep10"></div>
                         <span class="fade"> many thanks to @livid's <a href="http://www.v2ex.com">V2EX</a></span>
 
@@ -110,38 +108,6 @@
 
 
 
-
-<template name="login">
-  <div class="sep20"></div>
-  <div class="box">
-      <div class="header"><a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> 登入</div>
-      <div class="problem">登入过程中遇到一些问题：<ul><li></li></ul></div>
-      <div class="inner">
-          <form>
-          <table cellpadding="5" cellspacing="0" border="0" width="100%">
-              <tr>
-                  <td width="120" align="right">邮箱</td>
-                  <td width="auto" align="left"><input type="text" class="sl" name="email" value="" autofocus="autofocus" /></td>
-              </tr>
-              <tr>
-                  <td width="120" align="right">密码</td>
-                  <td width="auto" align="left"><input type="password" class="sl" name="password" value="" /></td>
-              </tr>
-              <tr>
-                  <td width="120" align="right">D令牌</td>
-                  <td width="auto" align="left"><input type="text" class="sl" name="token" value="" placeholder="如果有的话"/></td>
-              </tr>
-              <tr>
-                  <td width="120" align="right"></td>
-                  <td width="auto" align="left"><input type="submit" class="super normal button" value="登入" /></td>
-              </tr>
-          </table>
-          </form>
-      </div>
-  </div>
-
-
-</template>
 
 <template name="new">
   <div class="sep20"></div>
@@ -277,7 +243,7 @@
     <div class="cell">
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <tbody><tr>
-                <td width="73" valign="top" align="center">{{#constant}}<img src="{{gravatar email 73}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</td>
+                <td width="73" valign="top" align="center">{{#constant}}<img src="{{profile.figureUrl}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</td>
                 <td width="10"></td>
                 <td width="auto" valign="top" align="left">
                     <div class="fr">
@@ -285,10 +251,9 @@
                         
                     
                     </div>
-                    <h1 style="margin-bottom: 5px;">{{user}}</h1>
+                    <h1 style="margin-bottom: 5px;">{{profile.name}}</h1>
                     <span class="bigger gray">Live long and prosper</span>
                     <div class="sep5"></div>
-                    <span class="fade">DNSPod 第 {{_id}} 号会员，加入于 {{fromnow created}}</span>
                 </td>
             </tr>
         </tbody></table>
@@ -357,7 +322,7 @@
                 
                 <td width="auto" valign="middle"><span class="item_title"><a href="/t/{{_id}}#reply{{reply_count}}">{{title}}</a></span>
                 <div class="sep5"></div>
-                <span class="small fade">{{#each nodes}}<a class="node" href="/go/{{this}}">{{node_name this}}</a> &nbsp;•&nbsp; {{/each}}<strong><a href="/member/{{user}}">{{user}}</a></strong> &nbsp;•&nbsp; {{fromnow updated}} {{#if last_reply}}&nbsp;•&nbsp; 最后回复来自 <strong><a href="/member/{{userof last_reply}}">{{userof last_reply}}</a></strong>{{/if}}</span>
+                <span class="small fade">{{#each nodes}}<a class="node" href="/go/{{this}}">{{node_name this}}</a> &nbsp;•&nbsp; {{/each}}<strong><a href="/member/{{userId}}">{{user}}</a></strong> &nbsp;•&nbsp; {{fromnow updated}} {{#if last_reply}}&nbsp;•&nbsp; 最后回复来自 <strong><a href="/member/{{last_reply}}">{{userof last_reply}}</a></strong>{{/if}}</span>
                 </td>
                 <td width="50" align="right" valign="middle">
                     {{#unless no_reply}}

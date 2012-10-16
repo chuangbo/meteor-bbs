@@ -1,26 +1,21 @@
 {
   "meteor": {
     "git": "https://github.com/meteor/meteor.git",
-    "branch": "master",
-    "commit": "f2653345665b691f7d5a59a0e050d645c32cdaf6"
+    "branch": "devel",
+    "commit": "2033728f29e186a508dd3c2f8c2bee7bda747d96"
   },
   "dependencies": {
     "basePackages": {
       "moment": {},
-      "gravatar": {},
       "router": {},
-      "cookie": {}
+      "cookie": {},
+      "accounts-qq": {}
     },
     "packages": {
       "moment": {
         "git": "https://github.com/possibilities/meteor-moment.git",
         "tag": "v1.7.0",
-        "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
-      },
-      "gravatar": {
-        "git": "https://github.com/tmeasday/meteor-gravatar.git",
-        "tag": "v0.0.2",
-        "commit": "72623b359e8dc977fdec833beddfd5b9a2f49d34"
+        "commit": "bbdf5c60624d47d6d546fdf06126571545a2d7dd"
       },
       "router": {
         "git": "https://github.com/tmeasday/meteor-router.git",
@@ -32,20 +27,15 @@
         "tag": "v1.0.2",
         "commit": "263fd43ef3c7eaaa3f412b97bbc8d4622b348a6e"
       },
-      "crypto-md5": {
-        "git": "https://github.com/tmeasday/meteor-crypto-md5.git",
-        "tag": "v0.0.1",
-        "commit": "a0638a6cabfc84e19f2d5828f76aa8f6a0cc8c1a"
+      "accounts-qq": {
+        "git": "https://github.com/yonggao/meteor-accounts-qq.git",
+        "tag": "v0.2.4",
+        "commit": "59ac281e964586fd0908d09252d2b1c9e9627708"
       },
       "deps-extensions": {
         "git": "https://github.com/tmeasday/meteor-deps-extensions.git",
         "tag": "v0.1.0",
         "commit": "110462c0ba33aaeb35e55069134287325cc453e5"
-      },
-      "crypto-base": {
-        "git": "https://github.com/tmeasday/meteor-crypto-base.git",
-        "tag": "v0.0.1",
-        "commit": "668fc710ad041eee6ae2f9b53289128f211aa9e0"
       }
     }
   }
