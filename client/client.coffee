@@ -111,7 +111,6 @@ Template.index.helpers
 
     # tab
     tab = Session.get 'tab'
-    console.log 'get topics', tab
 
     sel = if tab == '/' then {} else {nodes: tab}
     r = Topics.find sel, {sort: {updated: -1}}
@@ -240,7 +239,6 @@ Template.topic.events
     data.userId = Meteor.userId()
     data.created = new Date()
 
-    console.log data
 
     if data.content == ''
       showerror '回复内容不能为空'
@@ -354,7 +352,6 @@ BbsRouter = ReactiveRouter.extend
 Router = new BbsRouter
 
 Meteor.startup ->
-  console.log 'meteor startup'
   tab = Cookie.get 'tab'
   Backbone.history.start pushState: true
 

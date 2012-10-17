@@ -468,7 +468,7 @@ ul li {
     vertical-align: top;
     width: 20px;
     height: 16px;
-    background-image: url('img/reply.png');
+    background-image: url('/img/reply.png');
 }
 
 .reply_content, .topic_content {
