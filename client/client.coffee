@@ -44,8 +44,14 @@ view_helpers =
   user: ->
     userof this.userId
 
-  gravatar: () ->
-    return Meteor.users.findOne({'_id': this.userId})?.profile?.figureUrl
+  gravatar: (size) ->
+    profile = Meteor.users.findOne({'_id': this.userId})?.profile
+    if size <= 30
+      profile?.figureUrl
+    else if size <= 50
+      profile?.figureUrlAt50
+    else
+      profile?.figureUrlAt100
 
   fromnow: (t) ->
     moment.utc(t).fromNow()
@@ -287,11 +293,11 @@ Template.member.helpers
     Meteor.users.find '_id': Session.get 'memberId'
 
   topics: ->
-    r = Topics.find {userId: this.userId}, {sort: {updated: -1}}
+    r = Topics.find {userId: this._id}, {sort: {updated: -1}}
     r.fetch().slice 0, 20
 
   replys: ->
-    r = Replys.find {userId: this.userId}, {sort: {created: -1}}
+    r = Replys.find {userId: this._id}, {sort: {created: -1}}
     r.fetch().slice 0, 20
 
   reply_to: (topic_id) ->

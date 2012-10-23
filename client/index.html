@@ -38,7 +38,7 @@
                     <div class="cell">
                         <table cellpadding="0" cellspacing="0" border="0" width="100%">
                             <tr>
-                                <td width="48" valign="top"><a href="/member/{{_id}}"><img src="{{profile.figureUrl}}" class="avatar" border="0" align="default" width="48" height="48"/></a></td>
+                                <td width="48" valign="top"><a href="/member/{{_id}}"><img src="{{profile.figureUrlAt50}}" class="avatar" border="0" align="default" width="48" height="48"/></a></td>
                                 <td width="10" valign="top"></td>
                                 <td width="auto" align="left"><span class="bigger"><a href="/member/{{_id}}">{{profile.name}}</a></span>
                                     <div class="sep5"></div>
@@ -149,7 +149,7 @@
   {{#each topic}}
   <div class="sep20"></div>
   <div class="box" style="border-bottom: 0px;">
-    <div class="header"><div class="fr"><a href="/member/{{userId}}">{{#constant}}<img src="{{gravatar userId}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</a></div>
+    <div class="header"><div class="fr"><a href="/member/{{userId}}">{{#constant}}<img src="{{gravatar userId 73}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</a></div>
     <a href="/">Home</a> <span class="chevron">&nbsp;›&nbsp;</span> {{#each nodes}} <a href="/go/{{this}}" class="tab">{{node_name this}}</a> {{/each}}
     <div class="sep10"></div>
     <h1>{{title}}</h1>
@@ -218,7 +218,7 @@
   <div class="cell">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
         <tbody><tr>
-            <td width="48" valign="top" align="center"><img src="{{gravatar userId}}" class="avatar" border="0" align="default" auto="" width="48" height="48"></td>
+            <td width="48" valign="top" align="center"><img src="{{gravatar userId 48}}" class="avatar" border="0" align="default" auto="" width="48" height="48"></td>
             <td width="10" valign="top"></td>
             <td width="auto" valign="top" align="left"><div class="fr"><!-- <div id="thank_area_414844" class="thank_area"><a href="#;" class="thank">感谢回复者</a></div> &nbsp;  --><a href="#;" class="ReplyOne"><span class="reply_ico"></span></a> &nbsp;&nbsp; <span class="no">{{index}}</span></div>
                 <div class="sep3"></div>
@@ -244,7 +244,7 @@
     <div class="cell">
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <tbody><tr>
-                <td width="73" valign="top" align="center">{{#constant}}<img src="{{profile.figureUrl}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</td>
+                <td width="73" valign="top" align="center">{{#constant}}<img src="{{profile.figureUrlAt100}}" class="avatar" border="0" align="default" auto="" width="73" height="73">{{/constant}}</td>
                 <td width="10"></td>
                 <td width="auto" valign="top" align="left">
                     <div class="fr">
@@ -274,8 +274,8 @@
     <div class="cell"><span class="gray">{{user}} 最近创建的主题</span></div>
 
     {{#each topics}}
-    {{> topic_item}}
-  {{/each}}
+      {{> topic_item}}
+    {{/each}}
     
 </div>
 
@@ -318,7 +318,7 @@
         <table cellpadding="0" cellspacing="0" border="0" width="100%">
             <tbody><tr>
                 
-                <td width="48" valign="top" align="center"><a href="/member/{{userId}}"><img src="{{gravatar email 48}}" class="avatar" border="0" align="default" auto="" width="48" height="48"></a></td>
+                <td width="48" valign="top" align="center"><a href="/member/{{userId}}"><img src="{{gravatar 48}}" class="avatar" border="0" align="default" auto="" width="48" height="48"></a></td>
                 <td width="10"></td>
                 
                 <td width="auto" valign="middle"><span class="item_title"><a href="/t/{{_id}}#reply{{reply_count}}">{{title}}</a></span>
