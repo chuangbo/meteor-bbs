@@ -2,12 +2,15 @@
   "meteor": {
     "git": "https://github.com/meteor/meteor.git",
     "branch": "devel",
-    "commit": "1c9a5f9f6f3383391e2701a869a518eb8c61f51b"
+    "commit": "8eacb1ab9f3e0d268f584b6b606b73db5f0d3da9"
   },
   "dependencies": {
     "basePackages": {
       "moment": {},
-      "router": {},
+      "router": {
+        "git": "https://github.com/chuangbo/meteor-router.git",
+        "branch": "master"
+      },
       "cookie": {},
       "accounts-qq": {}
     },
@@ -18,9 +21,9 @@
         "commit": "c64b6ec0e714b9556f4b6643d430b868ba69d3d7"
       },
       "router": {
-        "git": "https://github.com/tmeasday/meteor-router.git",
-        "tag": "v0.3.3",
-        "commit": "1bb2182407892e9b95f0cf4f15a9a55e0a301c20"
+        "git": "https://github.com/chuangbo/meteor-router.git",
+        "branch": "master",
+        "commit": "ec77449129afc7fa23fc108e6a0fc6fba64183cb"
       },
       "cookie": {
         "git": "https://github.com/chuangbo/meteor-cookie.git",
@@ -33,9 +36,9 @@
         "commit": "655c7951b1d34a112e72d43e4d7cd5271dc9bfdd"
       },
       "page-js": {
-        "git": "https://github.com/tmeasday/meteor-page-js.git",
-        "tag": "v1.3.1",
-        "commit": "ee0b651869928abe50b5d06d7f32ccd2e657883a"
+        "git": "https://github.com/chuangbo/meteor-page-js.git",
+        "branch": "master",
+        "commit": "84b9c5fe2ecb749a8e0d2a570e208ce83e4e358e"
       }
     }
   }

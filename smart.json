@@ -5,7 +5,9 @@
   },
   "packages": {
     "moment": {},
-    "router": {},
+    "router": {
+      "git": "https://github.com/chuangbo/meteor-router.git"
+    },
     "cookie": {},
     "accounts-qq": {}
   }
