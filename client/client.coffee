@@ -81,11 +81,11 @@ content_parser = [
 
 
 # main
-Template.main.events
-  'click a:not([href^="http"]):not([href^="#"])': (e) ->
-    e.preventDefault()
-    href = $(e.currentTarget).attr 'href'
-    Router.navigate href, {trigger: true}
+# Template.main.events
+#   'click a:not([href^="http"]):not([href^="#"])': (e) ->
+#     e.preventDefault()
+#     href = $(e.currentTarget).attr 'href'
+#     Router.navigate href, {trigger: true}
 
 
 
@@ -212,7 +212,7 @@ Template.new.events
 
     topic_id = Topics.insert data
 
-    Router.navigate "t/#{topic_id}#reply0", {trigger: true}
+    Meteor.Router.to "/t/#{topic_id}#reply0"
 
 
 
@@ -260,7 +260,7 @@ Template.topic.events
       }
 
     reply_count = Topics.findOne(_id: this._id).reply_count
-    Router.navigate "t/#{this._id}#reply#{reply_count}", {trigger: false, replace: true}
+    Meteor.Router.to "/t/#{this._id}#reply#{reply_count}"
 
     $('#content').val('')
 
@@ -307,62 +307,60 @@ Template.member.helpers
 # APP
 
 
-BbsRouter = ReactiveRouter.extend
-  routes:
-    "": "index"
-    "p:page": "index_page"
-    "new": "new"
-    "t/:topic_id": "topic"
-    "go/:node": "tab"
-    "go/:node/p:page": "tab_page"
-    "member/:id": "member"
-  index: ->
+Meteor.Router.add
+  '/': ->
     Session.set 'tab', '/'
     Cookie.set 'tab', '/'
     Session.set 'page', 1
-    this.goto 'index'
-  index_page: (page) ->
+    'index'
+  '/p:page': (page) ->
     Session.set 'tab', '/'
     Cookie.set 'tab', '/'
     Session.set 'page', page
-    this.goto 'index'
-  new: ->
+    'index'
+  '/new': ->
     if not logined()
       return
     else
-      this.goto 'new'
-  login: ->
+      'new'
+  '/login': ->
     if logined()
       this.navigate '/', {trigger: true}
     else
-      this.goto 'login'
-  topic: (topic_id) ->
+      'login'
+  '/t/:topic_id': (topic_id) ->
     topic_id = topic_id.split('#', 2)[0]
     Session.set 'topic_id', topic_id
-    this.goto 'topic'
-  tab: (node) ->
+    'topic'
+  '/go/:node': (node) ->
     Session.set 'tab', node
     Cookie.set 'tab', node
     Session.set 'page', 1
-    this.goto 'index'
-  tab_page: (node, page) ->
+    'index'
+  "/go/:node/p:page": (node, page) ->
     Session.set 'tab', node
     Cookie.set 'tab', node
     Session.set 'page', page
-    this.goto 'index'
-  member: (id) ->
+    'index'
+  "/member/:id": (id) ->
     Session.set 'memberId', id
-    this.goto 'member'
+    'member'
 
-
-Router = new BbsRouter
+Meteor.Router.filters
+  'checkLoggedIn': (page) ->
+    if Meteor.user()
+      if Meteor.user()
+        'loading'
+      else
+        page
+    else
+      'signin'
 
 Meteor.startup ->
   tab = Cookie.get 'tab'
-  Backbone.history.start pushState: true
 
   if location.pathname == '/' and tab? and tab != '/'
-    Router.navigate "go/#{tab}", {trigger: true}
+    Meteor.Router.to "/go/#{tab}"
 
 
 
