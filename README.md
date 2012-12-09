@@ -76,6 +76,8 @@ Thanks @yonggao
 
 ## Changelog
 
+- 2012-12-09 v0.2.2 兼容 router 最新 api；添加少量权限控制
+- 2012-10-23 v0.2.1 显示合适的头像分辨率
 - 2012-10-17 v0.2 发布，合并了 @yonggao 的 QQ 登录分支 #2
 - 2012-09-21 使用 meteroite，使用 smart packages 减少代码量
 - 2012-09-20 v0.1 发布
