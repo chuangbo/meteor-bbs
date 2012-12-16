@@ -25,7 +25,10 @@ Meteor.autosubscribe ->
 # client: declare collection to hold count object
 Meteor.subscribe 'pages_count'
 
+# FIXME: subscribe all user profile
+Meteor.subscribe 'allUserData'
 
+# FIXME
 # subscribe member's topic & replys
 # Meteor.autosubscribe ->
 #   Meteor.subscribe 'member_topics', Session.get('memberId')

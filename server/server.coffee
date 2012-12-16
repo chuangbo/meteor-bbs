@@ -46,6 +46,9 @@ Meteor.publish 'replys', (topic_id) ->
   Replys.find topic_id: topic_id
 
 
+# publish all users' profile
+Meteor.publish "allUserData", ->
+  Meteor.users.find({}, {fields: {'profile': 1}})
 
 
 Meteor.publish 'member_topics', (member_id) ->
