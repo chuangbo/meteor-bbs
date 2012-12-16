@@ -22,3 +22,10 @@ Nodes.allow
     false
   remove: ->
     false
+
+
+Pages = new Meteor.Collection 'pages'
+Pages.allow
+  insert: -> false
+  update: -> false
+  remove: -> false

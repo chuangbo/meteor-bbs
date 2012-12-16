@@ -1,4 +1,5 @@
 # init
+
 Session.set 'view', null
 Session.set 'topic_id', null
 Session.set 'tab', '/'
@@ -6,6 +7,31 @@ Session.set 'memberId', null
 Session.set 'page', 1
 
 PAGE_ITEM = 20
+
+
+
+
+# all nodes
+Meteor.subscribe 'all_nodes'
+
+# current page topics
+Meteor.autosubscribe ->
+  Meteor.subscribe "topics", Session.get('tab'), Session.get('page')
+
+# current page reply
+Meteor.autosubscribe ->
+  Meteor.subscribe "replys", Session.get('topic_id')
+
+# client: declare collection to hold count object
+Meteor.subscribe 'pages_count'
+
+
+# subscribe member's topic & replys
+# Meteor.autosubscribe ->
+#   Meteor.subscribe 'member_topics', Session.get('memberId')
+# Meteor.autosubscribe ->
+#   Meteor.subscribe 'member_replys', Session.get 'memberId'
+
 
 # staff
 logined = ->
@@ -121,12 +147,7 @@ Template.index.helpers
     sel = if tab == '/' then {} else {nodes: tab}
     r = Topics.find sel, {sort: {updated: -1}}
 
-    # page
-    # ugly here, because meteor do not support limit & skip
-    start = PAGE_ITEM * (Session.get('page') - 1)
-    end = start + PAGE_ITEM
-
-    r.fetch().slice start, end
+    r.fetch().slice 0, PAGE_ITEM
 
   current_tab: (node) ->
     node == Session.get 'tab'
@@ -154,19 +175,19 @@ Template.index.helpers
 
   page_count: ->
     tab = Session.get 'tab'
-    sel = if tab == '/' then {} else {nodes: tab}
-    Math.ceil ( Topics.find(sel).count() / PAGE_ITEM )
+    Pages.findOne(tab: tab)?.count
 
   has_prev_page: ->
-    Session.get('page') - 0 != 1
+    Session.get('page')-0 != 1
 
   has_next_page: ->
     tab = Session.get 'tab'
-    sel = if tab == '/' then {} else {nodes: tab}
-    max_page = Math.ceil ( Topics.find(sel).count() / PAGE_ITEM )
+    max_page = Pages.findOne(tab: tab)?.count
 
-    Session.get('page') - 0 != max_page
+    max_page != 0 and Session.get('page')-0 != max_page
 
+Template.index.rendered = ->
+  Meteor.call 'updatePagesCount', Session.get('tab')
 
 # topic item line
 Template.topic_item.helpers view_helpers
